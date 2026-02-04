@@ -1,5 +1,5 @@
 {
-  "name": "Smart Study Planner 2026",
+  "name": "Smart Study Planner",
   "description": "An AI-powered study planner that adapts to your schedule, manages study habits with spaced repetition, and gamifies your progress.",
   "requestFramePermissions": [
     "camera"

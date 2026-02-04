@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LayoutDashboard, Calendar as CalendarIcon, Timer, Settings, Plus, GraduationCap, WifiOff } from 'lucide-react';
+import { LayoutDashboard, Calendar as CalendarIcon, Timer, Settings, Plus, GraduationCap } from 'lucide-react';
 import { Dashboard } from './components/Dashboard';
 import { FocusTimer } from './components/FocusTimer';
 import { SyllabusUploader } from './components/SyllabusUploader';
@@ -44,7 +44,6 @@ export default function App() {
   const [stats, setStats] = useState<UserStats>(INITIAL_STATS);
   const [showKeyDialog, setShowKeyDialog] = useState(false);
   const [hasCheckedKey, setHasCheckedKey] = useState(false);
-  const [isOnline, setIsOnline] = useState(true);
 
   // Load state from local storage on mount
   useEffect(() => {
@@ -66,17 +65,6 @@ export default function App() {
       setHasCheckedKey(true);
     };
     checkKey();
-
-    // Offline status detection
-    setIsOnline(navigator.onLine);
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-    return () => {
-        window.removeEventListener('online', handleOnline);
-        window.removeEventListener('offline', handleOffline);
-    };
   }, []);
 
   // Save state on change
@@ -139,10 +127,6 @@ export default function App() {
   };
 
   const handleReschedule = async () => {
-    if (!isOnline) {
-        alert("Smart rescheduling requires an internet connection.");
-        return;
-    }
     const today = new Date().toISOString().split('T')[0];
     const missed = tasks.filter(t => t.dueDate < today && t.status !== TaskStatus.COMPLETED);
     
@@ -173,14 +157,6 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row text-slate-900 font-sans">
       
-      {/* Offline Banner */}
-      {!isOnline && (
-        <div className="fixed top-0 left-0 right-0 z-[100] bg-amber-500 text-white text-center py-1 text-sm font-medium flex items-center justify-center gap-2 shadow-md">
-            <WifiOff size={16} />
-            <span>You are offline. Planner is working in local mode.</span>
-        </div>
-      )}
-
       {/* Sidebar Navigation */}
       <aside className="w-full md:w-64 bg-white border-r border-slate-200 fixed bottom-0 md:relative md:h-screen z-50 md:flex md:flex-col justify-between">
         <div className="p-6 hidden md:block">

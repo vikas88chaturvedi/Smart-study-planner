@@ -222,13 +222,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ tasks, stats, onTaskComple
                 </div>
              )}
            </div>
-
-           <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 text-white shadow-lg">
-                <h4 className="font-semibold mb-2">Offline Ready ⚡️</h4>
-                <p className="text-sm text-slate-300">
-                    Heading to the library? Your planner works perfectly without WiFi. Changes sync when you reconnect.
-                </p>
-           </div>
         </div>
       </div>
     </div>

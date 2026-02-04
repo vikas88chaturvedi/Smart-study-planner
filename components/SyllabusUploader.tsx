@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Upload, FileText, Loader2, Wand2, WifiOff } from 'lucide-react';
+import { Upload, FileText, Loader2, Wand2 } from 'lucide-react';
 import { parseSyllabusWithGemini } from '../services/geminiService';
 import { Task } from '../types';
 
@@ -34,11 +34,6 @@ export const SyllabusUploader: React.FC<SyllabusUploaderProps> = ({ onTasksGener
   };
 
   const handleProcess = async () => {
-    if (!navigator.onLine) {
-        setError("You are currently offline. Please connect to the internet to use AI features.");
-        return;
-    }
-
     if (!file && !textInput) {
       setError("Please upload an image or paste syllabus text.");
       return;
@@ -124,8 +119,7 @@ export const SyllabusUploader: React.FC<SyllabusUploaderProps> = ({ onTasksGener
         />
 
         {error && (
-          <div className={`text-sm p-3 rounded-lg flex items-center gap-2 ${error.includes('offline') ? 'bg-amber-50 text-amber-700' : 'bg-red-50 text-red-600'}`}>
-            {error.includes('offline') && <WifiOff size={16}/>}
+          <div className="text-red-500 text-sm bg-red-50 p-2 rounded-lg">
             {error}
           </div>
         )}
